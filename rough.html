@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            color: white;
+            border: none;
+        }
+        .add-btn{
+            color: white;
+            background-color:green;
+            border: none;
+            width: 10%;
+            height: 31px;
+            border-radius: 15px;
+            position: relative;
+            right: 6%;
+            z-index: 2;
+        }
+input{
+    border-radius: 15px;
+    width: 50%;
+    padding: 5px;
+    height: 17px;
+}
+.time{
+    width: 20%;
+}
+.list{
+    display: grid;
+    grid-template-columns: 400px 100px 150px;
+    padding-top: 10px;
+    row-gap: 15px;
+    column-gap: 10px;
+    align-items: center;
+    
+}
+.del-btn{
+    position: relative;
+    background-repeat: no-repeat;
+    background-color: rgba(219, 219, 219, 0.902);
+    left: 50%;
+    height: 25px;
+    width: 25px;
+    background-size: contain;
+    border-radius: 50px;
+    padding-right: 25%;
+    padding-left: 13%;
+
+}
+.title{
+    padding-left: 41%;
+    font-weight:bolder;
+    font-size: larger;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.frame{
+    display:list-item;
+    max-width: 700px;
+    border-radius: 15px;
+    padding: 25px;
+    height: fit-content;
+    background-color: black;
+    margin-left: 250px;
+    color: white;
+    align-items: center;
+}
+    </style>
+</head>
+<body>
+    <div class="frame">
+        
+    <p class="title">To-Do List</p>
+    <input type="text" placeholder="Type  Here To add a Work" class="work">
+     <button class="add-btn"> Add </button>
+    <input type="date" class="time">
+   
+    <div class="list"></div>
+
+    </div>
+<script>
+    const doList= JSON.parse(localStorage.getItem('list')) || [];
+    console.log(doList);
+    window.onload=display;
+
+    document.querySelector('.add-btn').addEventListener('click',()=>
+{
+    addToList();
+})
+document.body.addEventListener('keypress',(event)=>{
+    if(event.key==="Enter"){
+    addToList();
+    }
+})
+function addToList(){
+
+    const work=document.querySelector('.work').value;
+    const dueDate=document.querySelector('.time').value;
+
+    if(work && dueDate){
+        doList.push({
+            work,
+            dueDate}
+        );
+        localStorage.setItem('list',JSON.stringify(doList));
+        display();
+
+        document.querySelector('.work').value='';
+        document.querySelector('.time').value='';
+    }else{
+        alert('enter valid work and date ::')
+    }
+}
+function display(){
+    let items='';
+    doList.forEach(function(item,index){
+    items+=`<div>${item.work}</div>
+    <div>${item.dueDate}</div>
+    <button class='del-btn'>🗑️</button>`
+    });
+    document.querySelector('.list').innerHTML=items;
+    document.querySelectorAll('.del-btn').forEach((button,index)=>{
+        button.addEventListener('click',()=>{
+            doList.splice(index,1);
+            localStorage.setItem('list',JSON.stringify(doList));
+            display();
+        })
+    })
+}
+
+</script>
+</body>
+</html>

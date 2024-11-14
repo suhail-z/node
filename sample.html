@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <button class="add">add</button>
+    <button class="sub">
+        sub
+    </button>
+    <button class="reset">reset</button>
+    <div class="ask"></div>
+    <div class="score"></div>
+    <script>
+        window.onload=update;
+        var c=0;
+        document.querySelector('.add').addEventListener('click',()=>{c++
+            update();
+        });
+        document.querySelector('.sub').addEventListener('click',()=>{c--
+            update();
+        });
+        document.querySelector('.reset').addEventListener('click',()=>{
+            document.querySelector('.ask').innerHTML=`<button class="yes">yes</button>
+                <button class="no">No</button>`;
+        document.querySelector('.yes').addEventListener('click',()=>{
+            c=0;
+            update();
+            document.querySelector('.ask').innerHTML=``;
+        })
+        document.querySelector('.no').addEventListener('click', ()=>{document.querySelector('.ask').innerHTML=``});
+        });
+        function update(){
+            document.querySelector('.score').innerHTML=`SCORE : ${c}`;
+        }
+            </script>
+</body>
+</html>
